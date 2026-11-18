@@ -80,6 +80,7 @@ const sunucu = http.createServer(async (req, res) => {
   }
 });
 
-sunucu.listen(3000, () => {
-  console.log('Bütçe Takip Sistemi aktif: http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+sunucu.listen(PORT, '0.0.0.0', () => {
+  console.log(`Bütçe Takip Sistemi aktif: http://localhost:${PORT}`);
 });
