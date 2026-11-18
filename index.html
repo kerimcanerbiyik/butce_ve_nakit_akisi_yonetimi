@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kişisel Bütçe ve Finans Takip Sistemi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo-alan">
+      <h1>Bütçe ve Nakit Akışı Yönetimi</h1>
+      <p>Vanilla HTML5, CSS3, ES6+ &amp; Saf Node.js JSON Veritabanı</p>
+    </div>
+    <div class="header-islem">
+      <button id="btnRaporIndir" class="btn-ikincil">JSON Raporu İndir</button>
+    </div>
+  </header>
+
+  <main class="konteyner">
+    <section class="ozet-kartlar">
+      <div class="kart">
+        <h3>Toplam Gelir</h3>
+        <p id="toplamGelir" class="tutar gelir-renk">0,00 ₺</p>
+      </div>
+      <div class="kart">
+        <h3>Toplam Gider</h3>
+        <p id="toplamGider" class="tutar gider-renk">0,00 ₺</p>
+      </div>
+      <div class="kart">
+        <h3>Net Bakiye</h3>
+        <p id="netBakiye" class="tutar">0,00 ₺</p>
+      </div>
+      <div class="kart">
+        <h3>Tasarruf Oranı</h3>
+        <p id="tasarrufOrani" class="tutar vurgu-renk">%0</p>
+      </div>
+    </section>
+
+    <div class="ana-izgara">
+      <section class="panel">
+        <h2>Yeni İşlem Ekle</h2>
+        <form id="islemFormu">
+          <div class="form-grup">
+            <label for="tip">İşlem Türü</label>
+            <select id="tip" required>
+              <option value="gelir">Gelir (+)</option>
+              <option value="gider" selected>Gider (-)</option>
+            </select>
+          </div>
+
+          <div class="form-grup">
+            <label for="kategori">Kategori</label>
+            <select id="kategori" required>
+              <option value="Maaş / Ek Gelir">Maaş / Ek Gelir</option>
+              <option value="Kira &amp; Aidat">Kira &amp; Aidat</option>
+              <option value="Market &amp; Gıda" selected>Market &amp; Gıda</option>
+              <option value="Faturalar">Faturalar</option>
+              <option value="Ulaşım">Ulaşım</option>
+              <option value="Sağlık &amp; Eğitim">Sağlık &amp; Eğitim</option>
+              <option value="Yatırım / Birikim">Yatırım / Birikim</option>
+              <option value="Diğer">Diğer</option>
+            </select>
+          </div>
+
+          <div class="form-grup">
+            <label for="aciklama">Açıklama</label>
+            <input type="text" id="aciklama" placeholder="Örn: Aylık market alışverişi" required>
+          </div>
+
+          <div class="form-iki-sutun">
+            <div class="form-grup">
+              <label for="tutar">Tutar (₺)</label>
+              <input type="number" id="tutar" step="0.01" min="0.01" placeholder="0.00" required>
+            </div>
+            <div class="form-grup">
+              <label for="tarih">Tarih</label>
+              <input type="date" id="tarih" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-ana">İşlemi Kaydet</button>
+        </form>
+
+        <hr class="ayirici">
+
+        <h2>Aylık Gider Limiti (Hedef)</h2>
+        <div class="limit-kutu">
+          <div class="form-iki-sutun">
+            <input type="number" id="limitInput" placeholder="Limit tutarı (₺)">
+            <button id="btnLimitKaydet" class="btn-ikincil">Güncelle</button>
+          </div>
+          <div class="ilerleme-alani">
+            <div class="ilerleme-bilgi">
+              <span id="limitDurumMetni">Limit belirlenmedi</span>
+              <span id="limitYuzde">%0</span>
+            </div>
+            <progress id="limitBar" value="0" max="100"></progress>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Kategori Bazlı Harcama Dağılımı</h2>
+        <canvas id="kategoriGrafik" width="520" height="220"></canvas>
+
+        <div class="tablo-ust">
+          <h2>Hesap Hareketleri</h2>
+          <div class="filtreler">
+            <select id="filtreTip">
+              <option value="hepsi">Tüm İşlemler</option>
+              <option value="gelir">Sadece Gelirler</option>
+              <option value="gider">Sadece Giderler</option>
+            </select>
+            <input type="text" id="filtreAra" placeholder="Açıklama ara...">
+          </div>
+        </div>
+
+        <div class="tablo-kapsayici">
+          <table>
+            <thead>
+              <tr>
+                <th>Tarih</th>
+                <th>Kategori</th>
+                <th>Açıklama</th>
+                <th>Tür</th>
+                <th>Tutar</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="islemListesi"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
